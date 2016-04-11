@@ -72,6 +72,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AttendanceWindow.xaml.cs">
+      <DependentUpon>AttendanceWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\AttendanceLeave.cs" />
     <Compile Include="Model\Task.cs" />
@@ -83,6 +86,10 @@
     <Compile Include="Widget\TaskRow.xaml.cs">
       <DependentUpon>TaskRow.xaml</DependentUpon>
     </Compile>
+    <Page Include="AttendanceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

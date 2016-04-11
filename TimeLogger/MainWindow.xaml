@@ -3,25 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="タスク一覧" Height="350" Width="250">
 
-	<StackPanel>
-		<Menu>
-			<MenuItem Header="工数">
-				<MenuItem Header="工数速報値" Click="OnReportButtonClick" />
-				<MenuItem Header="工数修正" />
-			</MenuItem>
-			<MenuItem Header="タスク">
-				<MenuItem Header="タスク管理" Click="OnManageButtonClick" />
-				<MenuItem Header="タスク読込" Click="OnReloadButtonClick" />
-			</MenuItem>
-			<MenuItem Header="ヘルプ">
-				<MenuItem Header="バージョン情報" />
-			</MenuItem>
-		</Menu>
-		<StackPanel Orientation="Horizontal">
-			<Button Content="計時停止(未割当時間開始)" Click="OnTaskStop" />
-			<Label Width="5" />
-			<Button Content="退勤" Click="onLeaveClick"/>
-		</StackPanel>
-		<StackPanel Name="TaskList" />
-	</StackPanel>
+    <ScrollViewer>
+        <StackPanel>
+            <Menu>
+                <MenuItem Header="工数">
+                    <MenuItem Header="工数速報値" Click="OnReportButtonClick" />
+                    <MenuItem Header="工数修正" />
+                </MenuItem>
+                <MenuItem Header="タスク">
+                    <MenuItem Header="タスク管理" Click="OnManageButtonClick" />
+                    <MenuItem Header="タスク読込" Click="OnReloadButtonClick" />
+                </MenuItem>
+                <MenuItem Header="ヘルプ">
+                    <MenuItem Header="バージョン情報" />
+                </MenuItem>
+            </Menu>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="計時停止(未割当時間開始)" Click="OnTaskStop" />
+                <Label Width="5" />
+                <Button Content="退勤" Click="onLeaveClick"/>
+            </StackPanel>
+            <StackPanel Name="TaskList" />
+        </StackPanel>
+    </ScrollViewer>
 </Window>

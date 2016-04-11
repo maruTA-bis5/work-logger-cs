@@ -24,6 +24,22 @@ namespace TimeLogger {
 		public MainWindow() {
 			InitializeComponent();
 			OnReloadButtonClick(null, null);
+
+			using (var db = new TimeLoggerContext()) {
+				var todayData = db.AttendanceLeaves.Where(a => a.TargetDate == DateTime.Today).ToList();
+                if (todayData == null || todayData.Count == 0) {
+                    var attendance = new AttendanceWindow();
+                    Task startupTask = attendance.doAttendance();
+                    if (startupTask != null) {
+                        onTaskStart(startupTask);
+                    }
+                    var attendanceRecord = new AttendanceLeave();
+                    attendanceRecord.TargetDate = DateTime.Today;
+                    attendanceRecord.Attendance = DateTime.Now;
+                    db.AttendanceLeaves.Add(attendanceRecord);
+                    db.SaveChanges();
+                }
+			}
 		}
 		private Task runningTask { get; set; }
 		private TaskWorkFact runningFact { get; set; }
@@ -35,6 +51,10 @@ namespace TimeLogger {
 			runningFact = new TaskWorkFact();
 			runningFact.TaskId = task.Id.Value;
 			runningFact.StartAt = DateTime.Now;
+            using (var db = new TimeLoggerContext()) {
+                db.TaskWorkFacts.Add(runningFact);
+                db.SaveChanges();
+            }
 		}
 		private void OnTaskStop(object sender, RoutedEventArgs e) {
 			onTaskStop(runningTask);
@@ -46,7 +66,8 @@ namespace TimeLogger {
 			runningFact.EndAt = DateTime.Now;
 			runningFact.updateManhour();
 			using (var db = new TimeLoggerContext()) {
-				db.TaskWorkFacts.Add(runningFact);
+				db.TaskWorkFacts.Attach(runningFact);
+                db.Entry(runningFact).State = EntityState.Modified;
 				db.SaveChanges();
 			}
 			runningFact = null;

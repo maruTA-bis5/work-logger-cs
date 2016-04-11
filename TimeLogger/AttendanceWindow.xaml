@@ -1,0 +1,10 @@
+﻿<Window x:Class="WorkLog.TimeLogger.AttendanceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AttendanceWindow" Height="65" Width="410" ResizeMode="NoResize">
+    <StackPanel Orientation="Horizontal">
+        <Label>自動開始するタスク:</Label>
+        <ComboBox Name="TaskSelector" Width="250" />
+        <Button Click="onAttendanceButtonClick">出勤</Button>
+    </StackPanel>
+</Window>
