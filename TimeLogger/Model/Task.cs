@@ -13,5 +13,9 @@ namespace WorkLog.TimeLogger.Model {
         public string Description { get; set; }
         public DateTime EnableFrom { get; set; }
         public DateTime EnableTo { get; set; }
+
+        public override string ToString() {
+            return TaskCode + ":" + TaskName;
+        }
     }
 }

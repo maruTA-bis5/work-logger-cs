@@ -22,7 +22,7 @@ namespace WorkLog.TimeLogger.Widget {
 		public TaskRow(Task task) {
 			InitializeComponent();
 			Task = task;
-			TaskLabel.Content = Task.TaskCode + " : " + Task.TaskName;
+            TaskLabel.Content = Task.ToString();
 		}
 
 		public event TaskStartEventHandler OnTaskStart;

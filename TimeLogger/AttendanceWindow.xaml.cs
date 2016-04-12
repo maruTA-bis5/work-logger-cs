@@ -17,7 +17,7 @@ namespace WorkLog.TimeLogger {
     class TaskModel {
         public Task task { get; set; }
         public override string ToString() {
-            return task.TaskCode + ":" + task.TaskName;
+            return task.ToString();
         }
         public static TaskModel of(Task task) {
             TaskModel model = new TaskModel();
