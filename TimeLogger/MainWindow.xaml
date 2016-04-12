@@ -1,7 +1,7 @@
 ﻿<Window x:Class="TimeLogger.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="タスク一覧" Height="350" Width="250">
+        Title="タスク一覧" Height="400" Width="300">
 
     <ScrollViewer>
         <StackPanel>
@@ -18,6 +18,10 @@
                     <MenuItem Header="バージョン情報" />
                 </MenuItem>
             </Menu>
+            <StackPanel Orientation="Horizontal">
+                <Label>現在のタスク：</Label>
+                <Label Name="CurrentTaskLabel" />
+            </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button Content="計時停止(未割当時間開始)" Click="OnTaskStop" />
                 <Label Width="5" />

@@ -40,6 +40,9 @@ namespace TimeLogger {
                     db.SaveChanges();
                 }
 			}
+            if (runningTask == null) {
+                CurrentTaskLabel.Content = "未割当";
+            }
 		}
 		private Task runningTask { get; set; }
 		private TaskWorkFact runningFact { get; set; }
@@ -55,6 +58,7 @@ namespace TimeLogger {
                 db.TaskWorkFacts.Add(runningFact);
                 db.SaveChanges();
             }
+            CurrentTaskLabel.Content = runningTask;
 		}
 		private void OnTaskStop(object sender, RoutedEventArgs e) {
 			onTaskStop(runningTask);
@@ -72,6 +76,7 @@ namespace TimeLogger {
 			}
 			runningFact = null;
 			runningTask = null;
+            CurrentTaskLabel.Content = "未割当";
 		}
 
 		private void OnReloadButtonClick(object sender, RoutedEventArgs e) {
