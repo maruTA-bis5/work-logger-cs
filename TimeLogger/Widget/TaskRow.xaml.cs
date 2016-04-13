@@ -23,6 +23,7 @@ namespace WorkLog.TimeLogger.Widget {
 			InitializeComponent();
 			Task = task;
             TaskLabel.Content = Task.ToString();
+            TaskLabel.ToolTip = string.IsNullOrEmpty(Task.Description) ? Task.ToString() : Task.Description;
 		}
 
 		public event TaskStartEventHandler OnTaskStart;
