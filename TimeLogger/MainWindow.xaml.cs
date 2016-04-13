@@ -109,28 +109,44 @@ namespace TimeLogger {
 			return dailyWorkFact;
 		}
 
-		private void OnReportButtonClick(object sender, RoutedEventArgs e) {
-			var todayWorkFact = loadDailyWorkFacts(DateTime.Today);
+        private void OnReportButtonClick(object sender, RoutedEventArgs e) {
+            var todayWorkFact = loadDailyWorkFacts(DateTime.Today);
 
-			if (todayWorkFact.Count == 0) {
-				MessageBox.Show("実績データがありません");
-				return;
-			}
+            var factByTask = todayWorkFact.GroupBy(f => f.TaskId, (t, fs) => new KeyValuePair<long, decimal>(t, fs.Sum(f => f.Manhour))).ToDictionary(p => p.Key, p => p.Value);
 
-			var factByTask = todayWorkFact.GroupBy(f => f.TaskId, (t, fs) => new KeyValuePair<long, decimal>(t, fs.Sum(f => f.Manhour)));
-			Dictionary<long?, Task> tasks;
-			using (var db = new TimeLoggerContext()) {
-				tasks = db.Tasks.ToDictionary(t => t.Id);
-			}
+            if (runningFact != null) {
+                TimeSpan span = DateTime.Now.Subtract(runningFact.StartAt);
+                decimal hour = new decimal(span.Hours);
+                decimal min = new decimal(span.Minutes);
+                min = decimal.Divide(min, 60);
+                min = decimal.Round(min, 2);
 
-			StringBuilder builder = new StringBuilder();
-			foreach (var fact in factByTask) {
-				var task = tasks[fact.Key];
-				builder.AppendLine(String.Format("{0}:{1} \t{2}h", task.TaskCode, task.TaskName, fact.Value));
-			}
+                var manhour = hour + min;
+                if (factByTask.Keys.Contains(runningFact.TaskId)) {
+                    factByTask[runningFact.TaskId] = factByTask[runningFact.TaskId] + manhour;
+                }
+                else {
+                    factByTask[runningFact.TaskId] = manhour;
+                }
+            }
 
-			MessageBox.Show(builder.ToString());
-		}
+            if (factByTask.Keys.Count == 0) {
+                MessageBox.Show("実績データがありません");
+                return;
+            }
+
+            Dictionary<long?, Task> tasks;
+            using (var db = new TimeLoggerContext()) {
+                tasks = db.Tasks.ToDictionary(t => t.Id);
+            }
+            StringBuilder builder = new StringBuilder();
+            foreach (var fact in factByTask) {
+                var task = tasks[fact.Key];
+                builder.AppendLine(String.Format("{0}:{1} \t{2}h", task.TaskCode, task.TaskName, fact.Value));
+            }
+
+            MessageBox.Show(builder.ToString());
+        }
 
 		private void onLeaveClick(object sender, RoutedEventArgs e) {
 			onTaskStop(runningTask);
