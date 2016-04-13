@@ -94,7 +94,9 @@ namespace TimeLogger {
 		}
 
 		private void OnManageButtonClick(object sender, RoutedEventArgs e) {
-			new TaskManageWindow().ShowDialog();
+			var window = new TaskManageWindow();
+            window.Topmost = true;
+            window.ShowDialog();
 			OnReloadButtonClick(sender, e);
 		}
 
