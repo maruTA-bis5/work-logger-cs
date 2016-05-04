@@ -50,10 +50,10 @@ namespace WorkLog.TimeLogger {
 
         private Task startupTask { get; set; }
 
-        private void onAttendanceButtonClick(object sender, RoutedEventArgs e) {
-            var taskModel = (TaskModel)TaskSelector.SelectedItem;
-            startupTask = taskModel.task;
-            this.Close();
-        }
+		private void onAttendanceButtonClick(object sender, RoutedEventArgs e) {
+			var taskModel = (TaskModel)TaskSelector.SelectedItem;
+			startupTask = taskModel != null ? taskModel.task : null;
+			this.Close();
+		}
     }
 }
