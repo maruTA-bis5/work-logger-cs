@@ -82,7 +82,7 @@ namespace TimeLogger {
 		private void OnReloadButtonClick(object sender, RoutedEventArgs e) {
 			var latestTaskRows = new List<TaskRow>();
 			using (var db = new TimeLoggerContext()) {
-				foreach (var task in db.Tasks.OrderBy(t => t.TaskCode)) {
+				foreach (var task in db.Tasks.Where(t => t.IsEnabled).OrderBy(t => t.TaskCode)) {
 					var row = new TaskRow(task);
 					row.OnTaskStart += onTaskStart;
 					row.OnTaskStop += onTaskStop;

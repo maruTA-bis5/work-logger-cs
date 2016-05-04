@@ -26,6 +26,13 @@ namespace WorkLog.TimeLogger.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+			// bug: 全てのtask.isEnabled == falseの場合、次回マイグレーション時にすべてtrueになる
+			bool isMigrate = context.Tasks.Where(t => t.IsEnabled == true).Count() == 0;
+			if (isMigrate) {
+				context.Tasks.ToList().ForEach(t => t.IsEnabled = true);
+				context.SaveChanges();
+			}
         }
     }
 }

@@ -13,6 +13,8 @@ namespace WorkLog.TimeLogger.Model {
         public string Description { get; set; }
         public DateTime EnableFrom { get; set; }
         public DateTime EnableTo { get; set; }
+		[DefaultValue(true)]
+		public bool IsEnabled { get; set; }
 
         public override string ToString() {
             return TaskCode + ":" + TaskName;
