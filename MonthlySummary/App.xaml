@@ -1,0 +1,8 @@
+﻿<Application x:Class="MonthlySummary.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MonthlySummaryWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

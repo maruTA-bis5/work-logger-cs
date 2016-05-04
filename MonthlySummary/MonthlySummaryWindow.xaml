@@ -1,0 +1,28 @@
+﻿<Window x:Class="WorkLog.MonthlySummary.MonthlySummaryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MonthlySummaryWindow" Height="300" Width="300">
+    <Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="25" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0" Orientation="Horizontal">
+			<DatePicker Name="targetYearMonth" />
+			<Button Click="onLoadClick">読込</Button>
+			<Label Name="status" />
+		</StackPanel>
+		<ScrollViewer Grid.Row="1">
+			<StackPanel Orientation="Horizontal">
+				<DataGrid Name="attendanceGrid" IsReadOnly="True" AutoGenerateColumns="False">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="日付" Binding="{Binding TargetDate, StringFormat=MM/dd(ddd)}" />
+						<DataGridTextColumn Header="出勤" Binding="{Binding Attendance, StringFormat=HH:mm}" />
+						<DataGridTextColumn Header="退勤" Binding="{Binding Leave, StringFormat=HH:mm}" />
+					</DataGrid.Columns>
+				</DataGrid>
+				<DataGrid Name="workFactGrid" IsReadOnly="True" AutoGenerateColumns="False"></DataGrid>
+			</StackPanel>
+		</ScrollViewer>
+    </Grid>
+</Window>
