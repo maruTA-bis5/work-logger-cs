@@ -29,6 +29,7 @@ namespace TimeLogger {
 				var todayData = db.AttendanceLeaves.Where(a => a.TargetDate == DateTime.Today).ToList();
                 if (todayData == null || todayData.Count == 0) {
                     var attendance = new AttendanceWindow();
+                    attendance.Topmost = true;
                     Task startupTask = attendance.doAttendance();
                     if (startupTask != null) {
                         onTaskStart(startupTask);
