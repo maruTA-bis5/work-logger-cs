@@ -37,7 +37,7 @@ namespace WorkLog.TimeLogger {
         public AttendanceWindow() {
             InitializeComponent();
             using (var db = new TimeLoggerContext()) {
-                var tasks = db.Tasks.OrderBy(t => t.TaskCode).ToList().ConvertAll(t => TaskModel.of(t));
+                var tasks = db.Tasks.Where(t => t.IsEnabled).OrderBy(t => t.TaskCode).ToList().ConvertAll(t => TaskModel.of(t));
                 tasks.Insert(0, new EmptyTaskModel());
                 TaskSelector.ItemsSource = tasks;
             }
