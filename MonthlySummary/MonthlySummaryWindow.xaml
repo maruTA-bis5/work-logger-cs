@@ -22,6 +22,12 @@
 					</DataGrid.Columns>
 				</DataGrid>
 				<DataGrid Name="workFactGrid" IsReadOnly="True" AutoGenerateColumns="False"></DataGrid>
+				<DataGrid Name="totalWorkFactGrid" IsReadOnly="True" AutoGenerateColumns="False">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="タスク" Binding="{Binding DisplayName}" />
+						<DataGridTextColumn Header="合計工数" Binding="{Binding TotalManhour}" />
+					</DataGrid.Columns>
+				</DataGrid>
 			</StackPanel>
 		</ScrollViewer>
     </Grid>

@@ -40,6 +40,11 @@ namespace WorkLog.MonthlySummary {
 					attendanceLeaves = db.AttendanceLeaves.Where(a => a.TargetDate >= monthFrom && a.TargetDate <= monthTo).ToDictionary(a => a.TargetDate.Date);
 					// ↓DBで集計させるべき
 					taskWorkFacts = db.TaskWorkFacts.Where(f => f.StartAt >= monthFrom && f.StartAt <= monthTo).ToList();
+					var hoge = from task in db.TaskWorkFacts
+							   where task.StartAt >= monthFrom
+							   && task.StartAt <= monthTo
+							   select task;
+
 				}
 				var workFactByDate = new Dictionary<DateTime, List<TaskWorkFact>>();
 				foreach (var workfact in taskWorkFacts) {
@@ -108,10 +113,34 @@ namespace WorkLog.MonthlySummary {
 					workFactGrid.ItemsSource = workFactGridSource;
 				});
 
+				var totalManhour = new Dictionary</*taskId*/long, /*manhour*/decimal>();
+				foreach (var workFact in taskWorkFacts) {
+					var taskId = workFact.TaskId;
+					var manhour = workFact.Manhour;
+
+					if (totalManhour.ContainsKey(taskId)) {
+						manhour += totalManhour[taskId];
+					}
+					totalManhour[taskId] = manhour;
+				}
+				var totalManhourGridSource = new List<TotalManhourModel>();
+				foreach (var item in totalManhour) {
+					var task = tasks[item.Key];
+					var model = new TotalManhourModel();
+					model.DisplayName = task.ToString();
+					model.TotalManhour = item.Value;
+					totalManhourGridSource.Add(model);
+				}
+				totalManhourGridSource.Sort((o1, o2) => o1.DisplayName.CompareTo(o2.DisplayName));
+				Dispatcher.Invoke(() => totalWorkFactGrid.ItemsSource = totalManhourGridSource);
 
 			});
 			status.Content = "";
 		}
 		
+	}
+	class TotalManhourModel {
+		public string DisplayName { get; set; }
+		public decimal TotalManhour { get; set; }
 	}
 }
